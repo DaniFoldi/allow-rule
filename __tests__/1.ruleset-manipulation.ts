@@ -1,9 +1,7 @@
 import { Ruleset } from '../src/types'
 import { addRuleset, deleteAllRules, deleteRuleset, getRuleset } from '../src/index'
 
-const ruleset1: Ruleset = {
-
-}
+const ruleset1: Ruleset = {}
 
 beforeEach(() => {
   deleteAllRules()
