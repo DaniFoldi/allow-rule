@@ -1,9 +1,11 @@
-export interface Ruleset {
+export type Ruleset = RuleId | {anyOf: Ruleset[]} | {allOf: Ruleset[]} | {noneOf: Ruleset[]}
 
-}
+export type Result = 'allow' | 'deny' | (() => ('allow' | 'deny')) | Promise<void>
 
-export interface Rule {
+export interface RuleContext {}
 
-}
+export type RuleId = string
 
-export type RuleId = string | number;
+export type RulesetId = string | number
+
+export type RulesetStore = Record<RulesetId, Ruleset>
