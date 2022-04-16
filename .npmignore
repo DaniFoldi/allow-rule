@@ -1,0 +1,10 @@
+.DS_Store
+.npmrc
+.git
+jest.config.cjs
+
+.git/
+.github/
+__tests__/
+coverage/
+src/
