@@ -16,9 +16,11 @@ export const testAB = defineRule<{a: number}>((context, options) => {
   return Math.random() < options.a ? 'allow' : 'deny'
 })
 
-export const consistentAB = defineRule<{a: number, key: string, get(k: string): Promise<string>, set(k: string, v: string): Promise<void>}>(async (context, options) => {
+export const consistentAB = defineRule<{a: number, key: string, get: string, set: string}>(async (context, options) => {
   const value = getValue(context, options.key)
-  const storedValue = await options.get(value)
+  const getMethod = getValue(context, options.get)
+  const setMethod = getValue(context, options.set)
+  const storedValue = await getMethod(value)
 
   if (storedValue === 'allow') {
     return 'allow'
@@ -27,7 +29,7 @@ export const consistentAB = defineRule<{a: number, key: string, get(k: string): 
   }
 
   const newValue = await waitForResult(testAB(context, options))
-  await options.set(value, newValue)
+  await setMethod(value, newValue)
   return newValue
 })
 
