@@ -1,4 +1,6 @@
-export type Ruleset = RuleId | {anyOf: Ruleset[]} | {allOf: Ruleset[]} | {noneOf: Ruleset[]}
+export type Ruleset = Rule | {anyOf: Ruleset[]} | {allOf: Ruleset[]} | {noneOf: Ruleset[]}
+
+export type Rule = [string, RuleOptions<any>?]
 
 export type Result = 'allow' | 'deny'
 
@@ -14,4 +16,4 @@ export type RulesetId = string | number
 
 export type RulesetStore = Record<RulesetId, Ruleset>
 
-export type Rule<T> = (context: RuleContext, options: RuleOptions<T>) => Result
+export type RuleDefinition<T> = (context: RuleContext, options: RuleOptions<T>) => Result
