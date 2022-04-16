@@ -1,4 +1,4 @@
-import { RulesetId, Ruleset, RuleId, RulesetStore, Result } from './types'
+import { RulesetId, Ruleset, RulesetStore, Result } from './types'
 
 
 const rules: RulesetStore = {}
