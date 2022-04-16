@@ -1,5 +1,5 @@
 import defineRule from "./defineRule"
-import  hash  from "./util/hash"
+import hash from "./util/hash"
 import getValue from "./util/getValue"
 
 

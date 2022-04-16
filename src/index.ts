@@ -1,6 +1,7 @@
-import { RulesetId, Ruleset, RulesetStore } from './types'
+import { RulesetId, Ruleset, RulesetStore, RuleStore, RuleId, RuleDefinition } from './types'
 
 const rulesets: RulesetStore = {}
+const rules: RuleStore = {}
 
 export function addRuleset(id: RulesetId, ruleset: Ruleset) {
   if (rulesets[id]) {
@@ -28,6 +29,36 @@ export function deleteRuleset(id: RulesetId) {
 
 export function deleteAllRulesets() {
   for (const id in rulesets) {
-    delete rulesets[id]
+    deleteRuleset(id)
+  }
+}
+
+export function addRule(id: RuleId, rule: RuleDefinition<any>) {
+  if (rules[id]) {
+    throw new Error(`Rule with id ${id} already exists`)
+  }
+
+  rules[id] = rule
+}
+
+export function getRule(id: RuleId): RuleDefinition<any> {
+  if (!rules[id]) {
+    throw new Error(`Rule with id ${id} does not exist`)
+  }
+
+  return rules[id]
+}
+
+export function deleteRule(id: RuleId) {
+  if (!rules[id]) {
+    throw new Error(`Rule with id ${id} does not exist`)
+  }
+
+  delete rules[id]
+}
+
+export function deleteAllRules() {
+  for (const id in rules) {
+    deleteRule(id)
   }
 }

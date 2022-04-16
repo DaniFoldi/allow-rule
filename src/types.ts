@@ -16,4 +16,6 @@ export type RulesetId = string | number
 
 export type RulesetStore = Record<RulesetId, Ruleset>
 
-export type RuleDefinition<T> = (context: RuleContext, options: RuleOptions<T>) => Result
+export type RuleDefinition<T> = (context: RuleContext, options: RuleOptions<T>) => (Result | Promise<Result>)
+
+export type RuleStore = Record<RuleId, RuleDefinition<any>>
