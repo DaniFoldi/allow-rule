@@ -18,7 +18,7 @@ function applyAllRules(ruleset: Ruleset, context: RuleContext): Promise<Result> 
       .then(results => results.includes('allow') ? 'allow' : 'deny')
   } else if (isAllOf(ruleset)) {
     return Promise.all(ruleset.allOf.map(ruleset => applyAllRules(ruleset, context)))
-      .then(results => results.includes('deny') ? 'allow' : 'deny')
+      .then(results => results.includes('deny') ? 'deny' : 'allow')
   } else if (isNoneOf(ruleset)) {
     return Promise.all(ruleset.noneOf.map(ruleset => applyAllRules(ruleset, context)))
       .then(results => results.includes('allow') ? 'deny' : 'allow')
