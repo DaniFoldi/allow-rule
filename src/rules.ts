@@ -1,6 +1,7 @@
 import defineRule from "./defineRule"
 import hash from "./util/hash"
 import getValue from "./util/getValue"
+import waitForResult from "./util/waitForResult"
 
 
 export const alwaysAllow = defineRule((context, options) =>{
@@ -15,7 +16,7 @@ export const testAB = defineRule<{a: number}>((context, options) => {
   return Math.random() < options.a ? 'allow' : 'deny'
 })
 
-export const consistentAB = defineRule<{a: number, key: string, get(k: string): string, set(k: string, v: string): void}>((context, options) => {
+export const consistentAB = defineRule<{a: number, key: string, get(k: string): string, set(k: string, v: string): void}>(async (context, options) => {
   const value = getValue(context, options.key)
   const storedValue = options.get(value)
 
@@ -25,7 +26,7 @@ export const consistentAB = defineRule<{a: number, key: string, get(k: string): 
     return 'deny'
   }
 
-  const newValue = testAB(context, options)
+  const newValue = await waitForResult(testAB(context, options))
   options.set(value, newValue)
   return newValue
 })
