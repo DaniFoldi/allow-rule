@@ -63,6 +63,14 @@ export function deleteAllRulesets() {
   }
 }
 
+export function replaceRulesetStore(withStore: RulesetStore) {
+  deleteAllRulesets()
+
+  for (const id in withStore) {
+    addRuleset(id, withStore[id])
+  }
+}
+
 export function addRule(id: RuleId, rule: RuleDefinition<any>) {
   if (rules[id]) {
     throw new Error(`Rule with id ${id} already exists`)
