@@ -32,12 +32,13 @@ export const consistentAB = defineRule<{a: number, key: string, get(k: string): 
 })
 
 export const hashAB = defineRule<{a: number, key: string, max?: number, offset?: number}>((context, options) => {
-  const max = Math.pow(16, options.max ?? 12)
+  const max = options.max ?? 12
+  const maxValue = Math.pow(16, max)
   const offset = options.offset ?? 0
   const value = getValue(context, options.key)
   const hashValue = parseInt(hash(value).substring(0, max), 16)
 
-  if (hashValue >= offset && hashValue < (offset + options.a % max)) {
+  if (hashValue >= offset && hashValue < (offset + options.a * maxValue) % maxValue) {
     return 'allow'
   }
 
