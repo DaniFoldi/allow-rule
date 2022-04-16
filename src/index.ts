@@ -1,8 +1,39 @@
-import { RulesetId, Ruleset, RulesetStore, RuleStore, RuleId, RuleDefinition } from './types'
+import { RulesetId, Ruleset, RulesetStore, RuleStore, RuleId, RuleDefinition, RuleContext, RuleOptions, Result } from './types'
 import { __builtInRules } from './rules'
+import waitForResult from './util/waitForResult'
+import { isAnyOf, isAllOf, isNoneOf, isRule } from './util/isType'
 
 const rulesets: RulesetStore = {}
 const rules: RuleStore = {}
+
+function applyAllRules(ruleset: Ruleset, context: RuleContext): Promise<Result> {
+  if (isRule(ruleset)) {
+    if (!rules[ruleset[0]]) {
+      throw new Error(`Rule ${ruleset[0]} not found`)
+    }
+  
+    return waitForResult(rules[ruleset[0]](context, ruleset[1] ?? {}))
+  } else if (isAnyOf(ruleset)) {
+    return Promise.all(ruleset.anyOf.map(ruleset => applyAllRules(ruleset, context)))
+      .then(results => results.includes('allow') ? 'allow' : 'deny')
+  } else if (isAllOf(ruleset)) {
+    return Promise.all(ruleset.allOf.map(ruleset => applyAllRules(ruleset, context)))
+      .then(results => results.includes('deny') ? 'allow' : 'deny')
+  } else if (isNoneOf(ruleset)) {
+    return Promise.all(ruleset.noneOf.map(ruleset => applyAllRules(ruleset, context)))
+      .then(results => results.includes('allow') ? 'deny' : 'allow')
+  } else {
+    throw new Error(`Ruleset ${ruleset} is invalid`)
+  }
+}
+
+export function applyRuleset(id: RulesetId, context: RuleContext): Promise<Result> {
+  if (!rulesets[id]) {
+    throw new Error(`Ruleset with id ${id} does not exist`)
+  }
+
+  return applyAllRules(rulesets[id], context)
+}
 
 export function addRuleset(id: RulesetId, ruleset: Ruleset) {
   if (rulesets[id]) {
