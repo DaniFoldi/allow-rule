@@ -1,7 +1,7 @@
 import { Ruleset } from '../src/types'
 import { addRuleset, deleteAllRules, deleteRuleset, getRuleset } from '../src/index'
 
-const ruleset1: Ruleset = 'allow'
+const ruleset1: Ruleset = ['alwaysAllow']
 
 beforeEach(() => {
   deleteAllRules()
