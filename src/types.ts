@@ -4,7 +4,9 @@ export type Rule = [string, RuleOptions<any>?]
 
 export type Result = 'allow' | 'deny'
 
-export interface RuleContext {}
+export interface RuleContext {
+  [key: string]: any
+}
 
 export type RuleOptions<T> = {
   [key in keyof T]: T[key]
@@ -12,7 +14,7 @@ export type RuleOptions<T> = {
 
 export type RuleId = string
 
-export type RulesetId = string | number
+export type RulesetId = string
 
 export type RulesetStore = Record<RulesetId, Ruleset>
 
