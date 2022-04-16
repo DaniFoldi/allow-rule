@@ -6,7 +6,7 @@ const rules: RuleStore = {}
 
 export function addRuleset(id: RulesetId, ruleset: Ruleset) {
   if (rulesets[id]) {
-    throw new Error(`Rule with id ${id} already exists`)
+    throw new Error(`Ruleset with id ${id} already exists`)
   }
 
   rulesets[id] = ruleset
@@ -14,7 +14,7 @@ export function addRuleset(id: RulesetId, ruleset: Ruleset) {
 
 export function getRuleset(id: RulesetId): Ruleset {
   if (!rulesets[id]) {
-    throw new Error(`Rule with id ${id} does not exist`)
+    throw new Error(`Ruleset with id ${id} does not exist`)
   }
 
   return rulesets[id]
@@ -22,7 +22,7 @@ export function getRuleset(id: RulesetId): Ruleset {
 
 export function deleteRuleset(id: RulesetId) {
   if (!rulesets[id]) {
-    throw new Error(`Rule with id ${id} does not exist`)
+    throw new Error(`Ruleset with id ${id} does not exist`)
   }
 
   delete rulesets[id]
