@@ -7,13 +7,7 @@ const rulesets: RulesetStore = {}
 const rules: RuleStore = {}
 
 function applyAllRules(ruleset: Ruleset, context: RuleContext): Promise<Result> {
-  if (isRule(ruleset)) {
-    if (!rules[ruleset[0]]) {
-      throw new Error(`Rule ${ruleset[0]} not found`)
-    }
-  
-    return waitForResult(rules[ruleset[0]](context, ruleset[1] ?? {}))
-  } else if (isAnyOf(ruleset)) {
+  if (isAnyOf(ruleset)) {
     return Promise.all(ruleset.anyOf.map(ruleset => applyAllRules(ruleset, context)))
       .then(results => results.includes('allow') ? 'allow' : 'deny')
   } else if (isAllOf(ruleset)) {
@@ -24,7 +18,11 @@ function applyAllRules(ruleset: Ruleset, context: RuleContext): Promise<Result> 
       .then(results => results.includes('allow') ? 'deny' : 'allow')
   }
 
-  throw new Error('Invalid ruleset')
+  if (!rules[ruleset[0]]) {
+    throw new Error(`Rule ${ruleset[0]} not found`)
+  }
+
+  return waitForResult(rules[ruleset[0]](context, ruleset[1] ?? {}))
 }
 
 export function applyRuleset(id: RulesetId, context: RuleContext): Promise<Result> {
