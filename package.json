@@ -2,7 +2,7 @@
   "name": "allow-rule",
   "version": "1.0.0",
   "description": "Set up rulesets to allow or deny requests",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest --coverage"
