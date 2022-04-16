@@ -22,8 +22,6 @@ function applyAllRules(ruleset: Ruleset, context: RuleContext): Promise<Result> 
   } else if (isNoneOf(ruleset)) {
     return Promise.all(ruleset.noneOf.map(ruleset => applyAllRules(ruleset, context)))
       .then(results => results.includes('allow') ? 'deny' : 'allow')
-  } else {
-    throw new Error(`Ruleset ${ruleset} is invalid`)
   }
 }
 
