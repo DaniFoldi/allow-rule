@@ -1,4 +1,5 @@
 import { RulesetId, Ruleset, RulesetStore, RuleStore, RuleId, RuleDefinition } from './types'
+import { __builtInRules } from './rules'
 
 const rulesets: RulesetStore = {}
 const rules: RuleStore = {}
@@ -39,6 +40,12 @@ export function addRule(id: RuleId, rule: RuleDefinition<any>) {
   }
 
   rules[id] = rule
+}
+
+export function useBuiltinRules() {
+  Object.entries(__builtInRules).forEach((entry: [string, RuleDefinition<any>]) => {
+    addRule(entry[0], entry[1])
+  })
 }
 
 export function getRule(id: RuleId): RuleDefinition<any> {
