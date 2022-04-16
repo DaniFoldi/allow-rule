@@ -1,10 +1,10 @@
 import { Ruleset } from '../src/types'
-import { addRuleset, deleteAllRules, deleteRuleset, getRuleset } from '../src/index'
+import { addRuleset, deleteAllRulesets, deleteRuleset, getRuleset } from '../src/index'
 
 const ruleset1: Ruleset = ['alwaysAllow']
 
 beforeEach(() => {
-  deleteAllRules()
+  deleteAllRulesets()
 })
 
 test('adds a rule to list', () => {
@@ -46,6 +46,6 @@ test('deletes all rules from list', () => {
   expect(() => getRuleset('rule')).toThrow()
   addRuleset('rule', ruleset1)
   expect(getRuleset('rule')).toEqual(ruleset1)
-  deleteAllRules()
+  deleteAllRulesets()
   expect(() => getRuleset('rule')).toThrow()
 })

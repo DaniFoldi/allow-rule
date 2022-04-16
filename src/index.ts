@@ -31,9 +31,9 @@ export function deleteRuleset(id: RulesetId) {
   ruleOrder.splice(ruleOrder.indexOf(id), 1)
 }
 
-export function deleteAllRules() {
-  for (const id in rules) {
-    delete rules[id]
+export function deleteAllRulesets() {
+  for (const id in ruleDefinitions) {
+    delete ruleDefinitions[id]
     ruleOrder.splice(ruleOrder.indexOf(id), 1)
   }
 }
