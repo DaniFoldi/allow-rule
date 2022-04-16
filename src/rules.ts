@@ -16,9 +16,9 @@ export const testAB = defineRule<{a: number}>((context, options) => {
   return Math.random() < options.a ? 'allow' : 'deny'
 })
 
-export const consistentAB = defineRule<{a: number, key: string, get(k: string): string, set(k: string, v: string): void}>(async (context, options) => {
+export const consistentAB = defineRule<{a: number, key: string, get(k: string): Promise<string>, set(k: string, v: string): Promise<void>}>(async (context, options) => {
   const value = getValue(context, options.key)
-  const storedValue = options.get(value)
+  const storedValue = await options.get(value)
 
   if (storedValue === 'allow') {
     return 'allow'
@@ -27,7 +27,7 @@ export const consistentAB = defineRule<{a: number, key: string, get(k: string): 
   }
 
   const newValue = await waitForResult(testAB(context, options))
-  options.set(value, newValue)
+  await options.set(value, newValue)
   return newValue
 })
 
@@ -38,7 +38,7 @@ export const hashAB = defineRule<{a: number, key: string, max?: number, offset?:
   const value = getValue(context, options.key)
   const hashValue = parseInt(hash(value).substring(0, max), 16)
 
-  if (hashValue >= offset && hashValue < (offset + options.a * maxValue) % maxValue) {
+  if (hashValue >= offset && hashValue < (offset + options.a * (maxValue - 1)) % maxValue) {
     return 'allow'
   }
 
