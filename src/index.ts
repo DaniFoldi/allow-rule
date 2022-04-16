@@ -23,6 +23,8 @@ function applyAllRules(ruleset: Ruleset, context: RuleContext): Promise<Result> 
     return Promise.all(ruleset.noneOf.map(ruleset => applyAllRules(ruleset, context)))
       .then(results => results.includes('allow') ? 'deny' : 'allow')
   }
+
+  throw new Error('Invalid ruleset')
 }
 
 export function applyRuleset(id: RulesetId, context: RuleContext): Promise<Result> {
