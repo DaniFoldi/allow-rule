@@ -30,22 +30,22 @@ test('consistent ab rule with a=0', async() => {
   const store: Record<string, string> = {}
   const set = (k: string, v: string) => new Promise<void>(r => {store[k] = v; r()})
   const get = (k: string): Promise<string> => new Promise(r => r(store[k]))
-  const data = {foo: 'bar'}
+  const data = {foo: 'bar', get, set}
 
-  expect(await consistentAB(data, {a: 0, key: 'foo', get, set})).toEqual('deny')
-  expect(await consistentAB(data, {a: 0, key: 'foo', get, set})).toEqual('deny')
-  expect(await consistentAB(data, {a: 0, key: 'foo', get, set})).toEqual('deny')
+  expect(await consistentAB(data, {a: 0, key: 'foo', get: 'get', set: 'set'})).toEqual('deny')
+  expect(await consistentAB(data, {a: 0, key: 'foo', get: 'get', set: 'set'})).toEqual('deny')
+  expect(await consistentAB(data, {a: 0, key: 'foo', get: 'get', set: 'set'})).toEqual('deny')
 })
 
 test('consistent ab rule with a=1', async () => {
   const store: Record<string, string> = {}
   const set = (k: string, v: string) => new Promise<void>(r => {store[k] = v; r()})
   const get = (k: string): Promise<string> => new Promise(r => r(store[k]))
-  const data = {foo: 'bar'}
+  const data = {foo: 'bar', get, set}
 
-  expect(await consistentAB(data, {a: 1, key: 'foo', get, set})).toEqual('allow')
-  expect(await consistentAB(data, {a: 1, key: 'foo', get, set})).toEqual('allow')
-  expect(await consistentAB(data, {a: 1, key: 'foo', get, set})).toEqual('allow')
+  expect(await consistentAB(data, {a: 1, key: 'foo', get: 'get', set: 'set'})).toEqual('allow')
+  expect(await consistentAB(data, {a: 1, key: 'foo', get: 'get', set: 'set'})).toEqual('allow')
+  expect(await consistentAB(data, {a: 1, key: 'foo', get: 'get', set: 'set'})).toEqual('allow')
 })
 
 test('hash ab rule with a=0', () => {
