@@ -1,10 +1,11 @@
 {
   "name": "allow-rule",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Set up rulesets to allow or deny requests",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "lint": "eslint --ext .cjs,.js,.json,.mjs,.ts,.vue --cache --cache-file .eslintcache --report-unused-disable-directives .",
     "test": "jest --coverage"
   },
   "repository": {
@@ -27,7 +28,14 @@
   "homepage": "https://github.com/DaniFoldi/allow-rule#readme",
   "type": "module",
   "devDependencies": {
+    "@danifoldi/eslint-plugin-eslint-presets": "^1.0.2",
     "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.1.4",
+    "eslint-plugin-unicorn": "^42.0.0",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
