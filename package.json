@@ -1,7 +1,7 @@
 {
   "name": "allow-rule",
   "version": "0.1.0",
-  "description": "Set up rulesets to allow or deny requests",
+  "description": "Set up rulesets to allow or deny operations",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
