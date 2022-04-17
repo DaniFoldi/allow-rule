@@ -82,7 +82,7 @@ export function addRule(id: RuleId, rule: RuleDefinition<unknown>) {
 
 export function useBuiltinRules() {
   for (const entry of Object.entries(__builtInRules)) {
-    addRule(entry[0], entry[1])
+    addRule(entry[0], entry[1] as RuleDefinition<unknown>)
   }
 }
 
