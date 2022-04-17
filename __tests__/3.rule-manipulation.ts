@@ -1,5 +1,6 @@
-import { addRule, deleteAllRules, deleteRule, getRule, useBuiltinRules } from "../src/index"
-import { alwaysAllow, alwaysDeny } from "../src/rules"
+import { addRule, deleteAllRules, deleteRule, getRule, useBuiltinRules } from '../src/index'
+import { alwaysAllow, alwaysDeny } from '../src/rules'
+
 
 beforeEach(() => {
   deleteAllRules()

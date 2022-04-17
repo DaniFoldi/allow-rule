@@ -1,15 +1,14 @@
 {
-  "include": ["src/**/*"],
+  "include": [ "src/**/*" ],
   "compilerOptions": {
     "allowJs": false,
     "alwaysStrict": true,
     "declaration": true,
-    "declarationMap": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "dist",
     "strict": true,
     "target": "es2022",
-    "types": ["node", "@types/jest"]
+    "types": [ "node", "@types/jest" ]
   }
 }

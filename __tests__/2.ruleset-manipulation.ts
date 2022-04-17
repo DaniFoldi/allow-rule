@@ -1,8 +1,9 @@
 import { Ruleset } from '../src/types'
 import { addRuleset, deleteAllRulesets, deleteRuleset, getRuleset, replaceRulesetStore } from '../src/index'
 
-const ruleset1: Ruleset = ['alwaysAllow']
-const ruleset2: Ruleset = ['alwaysDeny']
+
+const ruleset1: Ruleset = [ 'alwaysAllow' ]
+const ruleset2: Ruleset = [ 'alwaysDeny' ]
 
 beforeEach(() => {
   deleteAllRulesets()
@@ -55,9 +56,9 @@ test('replaces ruleset', () => {
   expect(() => getRuleset('rule')).toThrow()
   addRuleset('rule', ruleset1)
   expect(getRuleset('rule')).toEqual(ruleset1)
-  replaceRulesetStore({'rule': ruleset2})
+  replaceRulesetStore({ 'rule': ruleset2 })
   expect(getRuleset('rule')).toEqual(ruleset2)
-  replaceRulesetStore({'rule2': ruleset1})
+  replaceRulesetStore({ 'rule2': ruleset1 })
   expect(() => getRuleset('rule')).toThrow()
   expect(getRuleset('rule2')).toEqual(ruleset1)
 })

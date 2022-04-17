@@ -1,7 +1,8 @@
-import { Ruleset, Rule } from "../types"
+import { Ruleset, Rule } from '../types'
+
 
 export function isRule(ruleset: Ruleset): ruleset is Rule {
-  return Array.isArray(ruleset) && ruleset.length >= 1
+  return Array.isArray(ruleset) && ruleset.length > 0
 }
 
 export function isAnyOf(ruleset: Ruleset): ruleset is {anyOf: Ruleset[]} {

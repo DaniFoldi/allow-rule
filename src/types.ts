@@ -1,11 +1,11 @@
 export type Ruleset = Rule | {anyOf: Ruleset[]} | {allOf: Ruleset[]} | {noneOf: Ruleset[]}
 
-export type Rule = [string, RuleOptions<any>?]
+export type Rule = [string, RuleOptions<unknown>?]
 
 export type Result = 'allow' | 'deny'
 
 export interface RuleContext {
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export type RuleOptions<T> = {
@@ -20,4 +20,4 @@ export type RulesetStore = Record<RulesetId, Ruleset>
 
 export type RuleDefinition<T> = (context: RuleContext, options: RuleOptions<T>) => (Result | Promise<Result>)
 
-export type RuleStore = Record<RuleId, RuleDefinition<any>>
+export type RuleStore = Record<RuleId, RuleDefinition<unknown>>

@@ -1,7 +1,8 @@
-import { RulesetId, Ruleset, RulesetStore, RuleStore, RuleId, RuleDefinition, RuleContext, RuleOptions, Result } from './types'
+import { RulesetId, Ruleset, RulesetStore, RuleStore, RuleId, RuleDefinition, RuleContext, Result } from './types'
 import { __builtInRules } from './rules'
-import waitForResult from './util/waitForResult'
-import { isAnyOf, isAllOf, isNoneOf, isRule } from './util/isType'
+import waitForResult from './util/wait-for-result'
+import { isAnyOf, isAllOf, isNoneOf } from './util/is-type'
+
 
 const rulesets: RulesetStore = {}
 const rules: RuleStore = {}
@@ -71,7 +72,7 @@ export function replaceRulesetStore(withStore: RulesetStore) {
   }
 }
 
-export function addRule(id: RuleId, rule: RuleDefinition<any>) {
+export function addRule(id: RuleId, rule: RuleDefinition<unknown>) {
   if (rules[id]) {
     throw new Error(`Rule with id ${id} already exists`)
   }
@@ -80,12 +81,12 @@ export function addRule(id: RuleId, rule: RuleDefinition<any>) {
 }
 
 export function useBuiltinRules() {
-  Object.entries(__builtInRules).forEach((entry: [string, RuleDefinition<any>]) => {
+  for (const entry of Object.entries(__builtInRules)) {
     addRule(entry[0], entry[1])
-  })
+  }
 }
 
-export function getRule(id: RuleId): RuleDefinition<any> {
+export function getRule(id: RuleId): RuleDefinition<unknown> {
   if (!rules[id]) {
     throw new Error(`Rule with id ${id} does not exist`)
   }
