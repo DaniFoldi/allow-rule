@@ -177,8 +177,8 @@ test('string in array rule', () => {
 test('boolean equals rule', () => {
   const data = { foo: true }
 
-  expect(booleanEquals(data, { boolean: true, key: 'foo' })).toBe('deny')
-  expect(booleanEquals(data, { boolean: false, key: 'foo' })).toBe('allow')
+  expect(booleanEquals(data, { boolean: false, key: 'foo' })).toBe('deny')
+  expect(booleanEquals(data, { boolean: true, key: 'foo' })).toBe('allow')
 })
 
 test('array is empty rule', () => {
