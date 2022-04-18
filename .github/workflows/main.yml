@@ -214,6 +214,10 @@ jobs:
         node-version: 16
         cache: npm
 
+    - name: Build package
+      run: |
+        npm run build
+
     - uses: JS-DevTools/npm-publish@v1
       with:
         token: ${{ secrets.NPM_TOKEN }}
