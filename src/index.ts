@@ -9,21 +9,18 @@ const rules: RuleStore = {}
 
 function applyAllRules(ruleset: Ruleset, context: RuleContext): Promise<Result> {
   if (isAnyOf(ruleset)) {
-    return Promise.all(ruleset.anyOf.map(ruleset => applyAllRules(ruleset, context)))
-      .then(results => results.includes('allow') ? 'allow' : 'deny')
+    return Promise.all(ruleset.anyOf.map(ruleset => applyAllRules(ruleset, context))).then(results => results.includes('allow') ? 'allow' : 'deny').catch(() => 'deny')
   } else if (isAllOf(ruleset)) {
-    return Promise.all(ruleset.allOf.map(ruleset => applyAllRules(ruleset, context)))
-      .then(results => results.includes('deny') ? 'deny' : 'allow')
+    return Promise.all(ruleset.allOf.map(ruleset => applyAllRules(ruleset, context))).then(results => results.includes('deny') ? 'deny' : 'allow').catch(() => 'deny')
   } else if (isNoneOf(ruleset)) {
-    return Promise.all(ruleset.noneOf.map(ruleset => applyAllRules(ruleset, context)))
-      .then(results => results.includes('allow') ? 'deny' : 'allow')
+    return Promise.all(ruleset.noneOf.map(ruleset => applyAllRules(ruleset, context))).then(results => results.includes('allow') ? 'deny' : 'allow').catch(() => 'deny')
   }
 
   if (!rules[ruleset[0]]) {
     throw new Error(`Rule ${ruleset[0]} not found`)
   }
 
-  return waitForResult(rules[ruleset[0]](context, ruleset[1] ?? {}))
+  return waitForResult(rules[ruleset[0]](context, ruleset[1] ?? {})).catch(() => 'deny')
 }
 
 export function applyRuleset(id: RulesetId, context: RuleContext): Promise<Result> {
